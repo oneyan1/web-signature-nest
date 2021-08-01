@@ -1,5 +1,13 @@
 import { ApiProperty, ApiTags } from '@nestjs/swagger';
-import { Column, DataType, Model, Table } from 'sequelize-typescript';
+import {
+  BelongsTo,
+  Column,
+  DataType,
+  HasOne,
+  Model,
+  Table,
+} from 'sequelize-typescript';
+import { Role } from 'src/role/role.model';
 
 interface UserCreationAttr {
   name: string;
@@ -17,7 +25,7 @@ export class User extends Model<User, UserCreationAttr> {
     autoIncrement: true,
     primaryKey: true,
   })
-  id: number;
+  userID: number;
 
   @ApiProperty({ example: 'name' })
   @Column({
@@ -55,21 +63,6 @@ export class User extends Model<User, UserCreationAttr> {
   })
   password: string;
 
-  //   @Column({
-  //     type: DataType.NUMBER,
-  //     allowNull: false,
-  //   })
-  //   roleID: number;
-
-  //   @Column({
-  //     type: DataType.NUMBER,
-  //     allowNull: false,
-  //   })
-  //   departmentID: number;
-
-  //   @Column({
-  //     type: DataType.NUMBER,
-  //     allowNull: false,
-  //   })
-  //   documentsID: number[];
+  @HasOne(() => Role)
+  userRole: Role;
 }
